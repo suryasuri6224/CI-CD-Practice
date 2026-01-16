@@ -1,18 +1,23 @@
-name: CI for Registration Page
+name: Build & Deploy HTML Project
 
-# Trigger workflow on push or pull request to main branch
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master   # change to 'main' if your branch is main
 
 jobs:
   build:
-    runs-on: ubuntu-latest # GitHub uses Ubuntu by default; you don't need Ubuntu locally
+    runs-on: self-hosted
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List project files
-        run: ls -la
+      - name: Print message
+        run: echo "Building HTML project"
+
+      - name: Deploy to local folder
+        run: |
+          mkdir "C:\Users\user\Desktop\CI Deployment"
+          xcopy "C:\Users\user\Desktop\CI Practice\*" "C:\Users\user\Desktop\CI Deployment" /E /I /Y
+          echo "Deployment completed"
