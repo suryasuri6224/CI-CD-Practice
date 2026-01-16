@@ -1,31 +1,30 @@
-name: CI/CD for Registration Page
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-  deploy:
-    runs-on: self-hosted
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Show files
-        run: dir
+      - name: List files
+        run: ls -l
 
-      - name: Deploy to local folder
+  deploy:
+    runs-on: self-hosted  # Your laptop
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy HTML/JS
         run: |
-          REM Set Deployment folder
-          SET "DEPLOY_DIR=C:\Users\user\Desktop\CI Practice\Deployment"
-
-          REM Create the folder if it doesn't exist
-          if not exist "%DEPLOY_DIR%" mkdir "%DEPLOY_DIR%"
-
-          REM Copy all files to Deployment folder
-          xcopy /E /Y /| * "%DEPLOY_DIR%\"
-
-          echo Deployment done! Check your folder: %DEPLOY_DIR%
+          echo "Deploying files to local server folder..."
+          copy index.html C:\DeploymentFolder\
+          copy script.js C:\DeploymentFolder\
