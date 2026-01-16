@@ -1,9 +1,10 @@
-name: Build & Deploy HTML Project
+name: CI/CD for Registration Page
 
 on:
   push:
-    branches:
-      - master   
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -13,11 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Print message
-        run: echo "Building HTML project"
+      - name: Show files
+        run: dir
 
       - name: Deploy to local folder
         run: |
-          mkdir "C:\Users\user\Desktop\CI Deployment"
-          xcopy "C:\Users\user\Desktop\CI Practice\*" "C:\Users\user\Desktop\CI Deployment" /E /I /Y
-          echo "Deployment completed"
+          REM Set the deployment folder
+          SET DEPLOY_DIR=C:\Users\user\Desktop\CI Practice\Deployment
+
+          REM Create the folder if it doesn't exist
+          if not exist "%DEPLOY_DIR%" mkdir "%DEPLOY_DIR%"
+
+          REM Copy all files to deployment folder
+          xcopy /E /Y * "%DEPLOY_DIR%\"
+
+          echo Deployment done! Check your folder: %DEPLOY_DIR%
