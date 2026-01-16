@@ -19,13 +19,13 @@ jobs:
 
       - name: Deploy to local folder
         run: |
-          REM Set the deployment folder
-          SET DEPLOY_DIR=C:\Users\user\Desktop\CI Practice\Deployment
+          REM Set Deployment folder
+          SET "DEPLOY_DIR=C:\Users\user\Desktop\CI Practice\Deployment"
 
           REM Create the folder if it doesn't exist
           if not exist "%DEPLOY_DIR%" mkdir "%DEPLOY_DIR%"
 
-          REM Copy all files to deployment folder
-          xcopy /E /Y * "%DEPLOY_DIR%\"
+          REM Copy all files to Deployment folder
+          xcopy /E /Y /| * "%DEPLOY_DIR%\"
 
           echo Deployment done! Check your folder: %DEPLOY_DIR%
